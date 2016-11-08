@@ -5,8 +5,8 @@ var Pili = require('piliv2');
 
 
 //pili config
-var ACCESS_KEY = '7ylDgTI4R60h1lU__GgpJwA-LKZHCWXDXB5gXmkb';
-var SECRET_KEY = 'jc2fz8ox7Jti2D0StsES75RKvw7EEKs5G8DX7cKU';
+var ACCESS_KEY = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
+var SECRET_KEY = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
 var credentials = new Pili.Credentials(ACCESS_KEY, SECRET_KEY);
 var HUB = 'jcme-live';
 
