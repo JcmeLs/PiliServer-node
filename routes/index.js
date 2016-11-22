@@ -5,8 +5,8 @@ var Pili = require('piliv2');
 
 
 //pili config
-var ACCESS_KEY = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
-var SECRET_KEY = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
+var ACCESS_KEY = '7ylDgTI4R60h1lU__GgpJwA-LKZHCWXDXB5gXmkb';
+var SECRET_KEY = 'jc2fz8ox7Jti2D0StsES75RKvw7EEKs5G8DX7cKU';
 var credentials = new Pili.Credentials(ACCESS_KEY, SECRET_KEY);
 var HUB = 'jcme-live';
 
@@ -32,6 +32,13 @@ function publishURL(streamkey) {
     var pu = Pili.publishURL(credentials, 'pili-publish.jcmels.top', HUB, streamkey, 60);
     return pu;
 }
+
+
+function rtmpURL(streamkey) {
+    var rtmpURL = Pili.rtmpPlayURL('pili-live-rtmp.jcmels.top', HUB, streamkey);
+    return rtmpURL;
+}
+
 
 var hub = new Pili.Hub(credentials, HUB);
 //Create stream
@@ -102,6 +109,8 @@ router.get('/streams/live', function (req, res) {
                 console.log(stream.key);
                 console.dir("snapurl:" + snapURL(stream.key));
                 stream.snapurl = snapURL(stream.key);
+                stream.rtmpurl=rtmpURL(stream.key);
+                delete stream.credentials;
                 console.dir(stream);
                 streamlist.push(stream);
             });
@@ -110,12 +119,15 @@ router.get('/streams/live', function (req, res) {
                 hub.listStreams(listOptions, listCallBack);
             } else {
                 if (streamlist.length > 0) {
-                    resJson.data = streamlist;
+                   var list = {
+                        list: streamlist,
+                    }
+                    resJson.data = list;
                 }
                 else {
                     resJson.resultcode = "404";
                     resJson.reason = "当前没有直播";
-                    resJson.data = null;
+                    resJson.data = "当前没有直播";
                     resJson.error_code = "404";
                 }
                 console.dir(resJson);
